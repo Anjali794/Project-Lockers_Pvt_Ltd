@@ -37,6 +37,7 @@ class LockerPvtLtd {
 
                     System.out.println("2. Delete a File");
                     System.out.println("3. Search for a File");
+                    System.out.println("4. Go Back");
                     try {
                         choice = sc.nextInt();
                     } catch (Exception e) {
@@ -66,6 +67,10 @@ class LockerPvtLtd {
 
                             // Calling the function to search the file
                             BusinessOperations.searchFile(fileSearch);
+                        }
+                        case 4 -> {
+                            // go back to Main Menu
+                            
                         }
                         default ->
                                 //In the case of unprecedented input execute this
