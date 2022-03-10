@@ -6,106 +6,154 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class BusinessOperations {
-
-    //Bubble sort to sort file in ascending order
-    protected static String[] sort_sub(String[] array, int size){
-        String temp;
-        for(int i=0; i<size; i++){
-            for(int j=1; j<(size-i); j++){
-                if(array[j-1].compareToIgnoreCase(array[j])>0){
-                    temp = array[j-1];
-                    array[j-1]=array[j];
-                    array[j]=temp;
-                }
+public static void listingFile() {
+    	File fileDir = new File("C:\\locker");
+        //Creating the root directory
+        		fileDir.mkdir();
+       
+        
+       if(fileDir.isDirectory()){
+            List <String>listFile = Arrays.asList(fileDir.list());
+            Collections.sort(listFile);
+            System.out.println("---------------------------------------");
+            System.out.println("Sorting the filename in ascending order");
+            for(String s:listFile){
+                System.out.println(s);
+                
             }
-        }
-        return array;
-    }
-
-
-
-    //File listing function
-    protected static void listFiles() {
-
-        int fileCount = 0;
-        ArrayList<String> filenames = new ArrayList<String>();
-
-        File directoryPath = new File(System.getProperty("user.dir"));
-        File[] listOfFiles = directoryPath.listFiles();
-        fileCount = listOfFiles.length;
-
-
-        System.out.println("Files in ascending fashion: ");
-        for (int i = 0; i < fileCount; i++) {
-            if (listOfFiles[i].isFile()) {
-                filenames.add(listOfFiles[i].getName());
             }
-        }
+            
+      
 
-        String[] str = new String[filenames.size()];
+//            just for practice writing in decending order.
+//            System.out.println("---------------------------------------");
+//            System.out.println("Sorting by filename in descending order");
+//            Collections.sort(listFile,Collections.reverseOrder());
+//            for(String s:listFile){
+//                System.out.println(s);
+//            }
 
-        for (int i = 0; i < filenames.size(); i++) {
-            str[i] = filenames.get(i);
-        }
+        else{
+           System.out.println(fileDir.getAbsolutePath() + " is not a directory");
+        }BusinessOperations.mainMenu();
 
-        String[] sorted_filenames = sort_sub(str, str.length);
+  }
+    public static void createFile() {
 
-        for(String currentFile: sorted_filenames) {
-            System.out.println(currentFile);
-        }
+        File file = new File("C:\\locker");
+        //Creating the directory
+        file.mkdir();
+        
+     
+    Scanner sc = new Scanner(System. in ); //object of Scanner class
+    System.out.println("Enter the file name : ");
+    String name = sc.nextLine(); //variable name to store the file name
+        File file1 = new File("C:\\locker\\"+name);
 
-    }
-
-    //File delete function
-    protected static void deleteFile(String fileToBeDeleted) {
-
-        File file = new File( (System.getProperty("user.dir") ) + "\\" + fileToBeDeleted );
-
-        if(file.exists()) {
-            if ( file.delete() ) {
-                System.out.println("Hoorah! File deleted successfully!");
-            }
-        } else {
-            System.out.println("Sorry, File wasn't deleted (File Not Found)");
-        }
-    }
-
-    //File search function
-    protected static void searchFile(String fileToBeSearched) {
-
-        File file = new File( (System.getProperty("user.dir") ) + "\\" + fileToBeSearched );
-
-        //Check whether file whether file exists or not.
-        //If yes then display associated message
-        if(file.exists()) {
-            System.out.println("Yep! File found!");
-        } else {
-            System.out.println("Sorry, File is not here (File Not Found)");
-        }	PrintWriter pw;
         try {
-            pw = new PrintWriter(fileToBeSearched); //may throw exception
-            pw.println("saved");
-        }
-        // providing the checked exception handler
-        catch (FileNotFoundException e) {
-
+            if (file1.createNewFile()) {
+                System.out.println("File Created! :)");
+                BusinessOperations.fileMenuOperations();
+            } else {
+                System.out.println("File already exists :(");
+                BusinessOperations.fileMenuOperations();
+            }
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    //File creation function
-    protected static void createFile (String fileToBeCreated) {
-        File file = new File( (System.getProperty("user.dir") ) + "\\" + fileToBeCreated );
 
-        try {
-            if (file.createNewFile() ) {
-                System.out.println("File Created!");
-            } else {
-                System.out.println("File already exists :(");
-            }
-        } catch (IOException e) {
 
-            e.printStackTrace();
+    
+    public static void deleteMethod() {
+        String filename;
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Enter the Name of File to Delete: ");
+        filename = scan.nextLine();
+
+        File file= new File("C:\\locker\\"+filename);
+
+        if (file.delete()) {
+            System.out.println("File deleted successfully");
+          BusinessOperations.fileMenuOperations();
         }
+        else {
+            System.out.println("Oops !! File not found.Please try again ");
+            BusinessOperations.fileMenuOperations();
+        }
+
     }
-}
+    public static void searchMethod() {
+        System.out.println("Enter the name of the file to Search");
+        Scanner s1 = new Scanner(System.in);
+        String folderName = s1.next();
+        File file = new File("C:\\locker\\"+folderName);
+
+        if (file.exists()) {
+            System.out.println("Yep! File found!! :)"+"\n"+"This is the file location");
+            System.out.println(file.getAbsolutePath());
+           BusinessOperations.fileMenuOperations();
+        } else {
+            System.out.println("Sorry, File Not Found :(");
+            BusinessOperations.fileMenuOperations();
+        }
+
+//        try {
+//            PrintWriter pw = new PrintWriter(file);
+//            pw.println("saved");
+//            pw.close();
+//        } catch (FileNotFoundException e) {
+//            System.out.println(e);
+//        }
+
+    }
+    public static void mainMenu() {
+    	System.out.println("Please select one the following");
+        System.out.println("1 for current file names in ascending order ");
+        System.out.println("2 for your Business Operation");
+        System.out.println("3 for exit application");
+    	
+    }
+    
+    public static void fileMenuOperations() {
+    	
+    	System.out.println("Please choose one of the following options :");
+        System.out.println("1. Create a file");
+        System.out.println("2. Delete a File");
+        System.out.println("3. Search for a File");
+        System.out.println("4. for main menu");
+        Scanner sc2=new Scanner(System.in);
+    	try {
+    		
+            int choice=sc2.nextInt();
+             switch(choice) {
+             case 1:
+                 System.out.println("You have selected to create file");
+                 createFile();
+
+                 break;
+             case 2:
+                 System.out.println("You have selected to Delete file");
+                 deleteMethod();
+                 break;
+             case 3:
+                 System.out.println("You have Selected to search file");
+                 searchMethod();
+                 break;
+             case 4:
+                 System.out.println("Going back to MainMenu");
+                BusinessOperations.mainMenu();
+                  break;
+         }
+
+        }catch(Exception e) {
+           System.out.println("Oops!! Please Enter valid number");
+         BusinessOperations.fileMenuOperations();
+        }
+        
+		
+ 
+    	
+    }}
