@@ -34,7 +34,6 @@ class LockerPvtLtd {
                 case 2 -> {
                     System.out.println("Please choose one of the following options :");
                     System.out.println("1. Add a File");
-
                     System.out.println("2. Delete a File");
                     System.out.println("3. Search for a File");
                     System.out.println("4. Go Back");
@@ -69,7 +68,8 @@ class LockerPvtLtd {
                             BusinessOperations.searchFile(fileSearch);
                         }
                         case 4 -> {
-                            // go back to Main Menu
+                            System.out.println("Going back to MainMenu");
+                            Locker.mainMenu();
                             
                         }
                         default ->
